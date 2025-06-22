@@ -1,9 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/license_server.py", "use": "@vercel/python" }
+    {
+      "src": "api/license_server.py",
+      "use": "@vercel/python"
+    }
   ],
   "routes": [
-    { "src": "/api/validate", "dest": "api/license_server.py" }
+    {
+      "src": "/api/validate",
+      "dest": "api/license_server.py"
+    }
   ]
 }
