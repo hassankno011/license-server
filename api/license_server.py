@@ -1,12 +1,27 @@
-def handler(request):
+def handler(event, context):
+    import urllib.parse
+
     VALID_LICENSES = {
         "LIVE-123456": "active",
         "LIVE-ABCDEF": "active",
         "TEST-000000": "expired"
     }
 
-    key = request.args.get("key")
+    # Parse query string parameters from event
+    query = event.get("queryStringParameters") or {}
+    key = query.get("key")
+
     if key in VALID_LICENSES and VALID_LICENSES[key] == "active":
-        return ("valid", 200)
+        status = 200
+        body = "valid"
     else:
-        return ("invalid", 403)
+        status = 403
+        body = "invalid"
+
+    return {
+        "statusCode": status,
+        "headers": {
+            "Content-Type": "text/plain"
+        },
+        "body": body
+    }
